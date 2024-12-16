@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>副菜の色を選択しよう</title>
+    <title>ようこそTOPぺージ</title>
     <style>
         /* ボタンのスタイル */
         .color-button {

@@ -2,22 +2,25 @@ package model;
 
 
 public class Comment {
-    private String author;
-    private String content;
-    private String relatedColorOrDish; // 関連する色や副菜名
+    private String text;
+    private String author;  // 新たに作者（コメント者）のフィールドを追加
 
-    // コンストラクタ
-    public Comment(String author, String content, String relatedColorOrDish) {
+    // String, String 型のコンストラクタを追加
+    public Comment(String text, String author) {
+        this.text = text;
         this.author = author;
-        this.content = content;
-        this.relatedColorOrDish = relatedColorOrDish;
     }
 
-	public Comment() {
-		// TODO 自動生成されたコンストラクター・スタブ
-	}
+    
+    // ゲッターとセッター
+    public String getText() {
+        return text;
+    }
 
-	// ゲッターとセッター
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -25,41 +28,41 @@ public class Comment {
     public void setAuthor(String author) {
         this.author = author;
     }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getRelatedColorOrDish() {
-        return relatedColorOrDish;
-    }
-
-    public void setRelatedColorOrDish(String relatedColorOrDish) {
-        this.relatedColorOrDish = relatedColorOrDish;
-    }
-
-	public void setId(int int1) {
-		// TODO 自動生成されたメソッド・スタブ
-		
-	}
-
-	public void setText(String string) {
-		// TODO 自動生成されたメソッド・スタブ
-		
-	}
-
-	public void setColor(String string) {
-		// TODO 自動生成されたメソッド・スタブ
-		
-	}
-
-	public char[] getText() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

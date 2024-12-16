@@ -4,50 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class Recipe {
-	    private String name;            // レシピ名
-	    private String description;     // レシピの説明
-	    private List<Comment> comments; // コメントのリスト
+    private String name;
+    private String description;
+    private List<Comment> comments;  // コメントを保持するリスト
 
-	    // コンストラクタ
-	    public Recipe(String name, String description) {
-	        this.name = name;
-	        this.description = description;
-	        this.comments = new ArrayList<>();
-	    }
+    // コンストラクタ
+    public Recipe(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.comments = new ArrayList<>();  // コメントリストを初期化
+    }
 
-	    // レシピ名を取得する
-	    public String getName() {
-	        return name;
-	    }
+    // ゲッターとセッター
+    public String getName() {
+        return name;
+    }
 
-	    // レシピの説明を取得する
-	    public String getDescription() {
-	        return description;
-	    }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	    // コメントを取得する
-	    public List<Comment> getComments() {
-	        return comments;
-	    }
+    public String getDescription() {
+        return description;
+    }
 
-	    // コメントを追加する
-	    public void addComment(Comment comment) {
-	        comments.add(comment);
-	    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	    // コメントを削除する
-	    public void removeComment(Comment comment) {
-	        comments.remove(comment);
-	    }
+    public List<Comment> getComments() {
+        return comments;
+    }
 
-	    // レシピの詳細情報を表示する
-	    public void displayRecipeInfo() {
-	        System.out.println("Recipe Name: " + name);
-	        System.out.println("Description: " + description);
-	        System.out.println("Comments:");
-	        for (Comment comment : comments) {
-	            System.out.println(comment.getText());
-	        }
-	    }
-	}
+    
+    
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+    
+    
+
+    // レシピの詳細情報を表示する
+    public void displayRecipeInfo() {
+        System.out.println("Recipe Name: " + name);
+        System.out.println("Description: " + description);
+        System.out.println("Comments:");
+        
+        for (Comment comment : comments) {
+            System.out.println(comment.getText());
+        }
+    }
+}
+
+
+

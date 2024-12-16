@@ -15,15 +15,12 @@ public class Main extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        // 挨拶メッセージを生成
+    	
+    	//細かい挨拶内容は、GreetingUtilファイルに頼んだ。
         String greetingMessage = GreetingUtil.generateGreetingMessage();
-        
-        // メッセージをリクエストスコープにセット
         request.setAttribute("greeting", greetingMessage);
-        
-        // index.jspにフォワード
-        RequestDispatcher dispatcher = request.getRequestDispatcher
-        		("/WEB-INF/jsp/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
         dispatcher.forward(request, response);
     }
 }
+

@@ -1,64 +1,39 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SideDish {
-    private String name;
-    private List<String> ingredients; // 副菜に使う材料（野菜など）
 
-    // コンストラクタ
-    public SideDish(String name, List<String> ingredients) {
+
+public class SideDish {
+    private String name;  // 副菜の名前
+    private String description;
+    private List<Comment> comments;
+
+
+ // コンストラクタ
+    public SideDish(String name, String description, List<Comment> comments) {
         this.name = name;
-        this.ingredients = ingredients;
+        this.description = description;
+        this.comments = comments;
     }
 
-    public SideDish(String string, String string2, List<Comment> orangeComments) {
-		// TODO 自動生成されたコンストラクター・スタブ
-	}
 
-	public String getName() {
+    
+    // ゲッター
+    public String getName() {
         return name;
     }
 
-    public List<String> getIngredients() {
-        return ingredients;
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    
-    // 色に関連した副菜メニューを提案するメソッド
-    public static List<SideDish> getSideDishesForColor(String color) {
-        List<SideDish> sideDishes = new ArrayList<>();
-        List<String> ingredients = new ArrayList<>();
-        
-        // 色に関連した野菜を取得する。ここで合体。
-        Color colorInfo = Color.getColorInfo(color);
-        ingredients.addAll(colorInfo.getVegetables());
-
-        // 色ごとに副菜メニューを提案
-        switch (color) {
-            case "赤":
-                sideDishes.add(new SideDish("トマトと赤パプリカのサラダ", ingredients));
-                sideDishes.add(new SideDish("梅干しときゅうりの漬物", ingredients));
-                break;
-                
-            case "オレンジ":
-                sideDishes.add(new SideDish("にんじんのゴマ和え", ingredients));
-                sideDishes.add(new SideDish("かぼちゃの煮物", ingredients));
-                break;
-                
-            case "黄":
-                sideDishes.add(new SideDish("とうもろこしとさつまいものグラタン", ingredients));
-                break;
-                
-            // 他の色の場合の副菜提案
-            default:
-                sideDishes.add(new SideDish("選べる副菜がありません", ingredients));
-                break;
-        }
-        return sideDishes;
+    // コメント追加メソッド
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 }
+
 
 
 

@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,52 +11,89 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ColorDAO;
-import dao.CommentDAO;
-import dao.SideDishDAO;
 import model.Color;
 import model.Comment;
+import model.Recipe;
+import service.CommentService;
+import service.SideDishAdvise; 
 
 
-@WebServlet("/ColorSelect")
+
+@WebServlet("/colorSelect")
 public class ColorSelectServlet extends HttpServlet {
+	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-        // ユーザーが選択した色を取得
+    	// 文字エンコーディングの設定(文字化けを解消するために必要)
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        
+        
+        // 選ばれた色を取得
         String selectedColor = request.getParameter("color");
         
-     // Colorクラスを使って、色に関連する野菜を取得
-        Color colorInfo = Color.getColorInfo(selectedColor);
-        
-     // 副菜に関連するコメントをDAOから取得
-        List<Comment> comments = comment.getCommentsBySideDish(selectedSideDish);
+        // 色に関連する野菜を取得
+        List<String> vegetables = getVegetablesByColor(selectedColor);
 
-        // 野菜のリストをリクエストスコープにセット
-        request.setAttribute("vegetables", colorInfo.getVegetables());
-        
-        // ここで、色リストや副菜データ、コメントデータをDAOから取得する処理を追加
-        ColorDAO colorDAO = new ColorDAO();
-        SideDishDAO sideDishDAO = new SideDishDAO();
-        CommentDAO commentDAO = new CommentDAO();
 
-     // 色リストや副菜、コメントをDAOから取得
-        List<Color> colorList = colorDAO.getColorList();  // 例: ColorDAOから色リストを取得
+        // ランダムに野菜を選ぶ
+        Random random = new Random();
+        String selectedVegetable = vegetables.get(random.nextInt(vegetables.size()));
 
-        // 色に関連する副菜を取得
-        List<String> sideDishes = sideDishDAO.getSideDishesForColor(selectedColor);  // 色に関連する副菜を取得
+        // 野菜に関連するコメントを取得
+        List<Comment> comments = getCommentsByVegetable(selectedVegetable);
 
-        // 副菜に基づくコメントを取得
-        List<Comment> comments = commentDAO.getCommentsBySideDish(selectedSideDish);  // 副菜からコメントを取得
-
-        
-        // 取得したデータをリクエスト属性にセット
-        request.setAttribute("colorList", colorList);
-        request.setAttribute("sideDishes", sideDishes);
+        // リクエスト属性に設定
+        request.setAttribute("selectedColor", selectedColor); 
+        request.setAttribute("selectedVegetable", selectedVegetable);
         request.setAttribute("comments", comments);
 
-        // 結果ページにフォワード
+        // JSPに遷移
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
         dispatcher.forward(request, response);
     }
+	
+	
+	
+	@WebServlet("/SideDishServlet")
+	public class SideDishServlet extends HttpServlet {
+	    private static final long serialVersionUID = 1L;
+
+	    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+	            throws ServletException, IOException {
+	        // ユーザーが選択した野菜
+	        String selectedVegetable = request.getParameter("selectedVegetable");
+
+	        // サービスからレシピリストを取得
+	        List<Recipe> recipes = SideDishAdvise.getRecipesForSideDishAdvise(selectedVegetable);
+
+	        // JSPにデータを渡す
+	        request.setAttribute("recipes", recipes);
+	        request.setAttribute("selectedVegetable", selectedVegetable);
+
+	        // JSPへフォワード
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("/sideDish.jsp");
+	        dispatcher.forward(request, response);
+	    }
+	}
+	
+	
+	
+    // 色に関連する野菜を取得
+    private List<String> getVegetablesByColor(String selectedColor) {
+        Color colorInfo = Color.getColorInfo(selectedColor);
+        return colorInfo != null ? colorInfo.getVegetables() : List.of();  // null チェックしておく
+    }
+
+    // 野菜に関連するコメントを取得
+    private List<Comment> getCommentsByVegetable(String selectedVegetable) {
+        return CommentService.getCommentsForVegetable(selectedVegetable);
+    }
+    
 }
+    
+
+
+
+

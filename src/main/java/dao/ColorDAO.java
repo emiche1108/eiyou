@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Color;
+import model.Comment;
 
 
 public class ColorDAO {
@@ -41,6 +42,11 @@ public class ColorDAO {
         }
         return colorList;
     }
+
+	public static List<Comment> getCommentsByVegetable(String vegetable) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }
 
 
